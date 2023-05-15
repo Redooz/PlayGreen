@@ -10,8 +10,8 @@ export const databaseProviders = [
         port: 3306,
         username: 'root',
         password: '',
-        database: '',
-        entities: [],
+        database: 'green_run',
+        entities: [__dirname + '/**/*.entity.{.ts,.js}'],
         synchronize: true,
       });
 
