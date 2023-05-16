@@ -1,3 +1,4 @@
+import { User } from 'src/user/user.entity';
 import { DataSource } from 'typeorm';
 
 export const databaseProviders = [
@@ -11,7 +12,7 @@ export const databaseProviders = [
         username: 'root',
         password: '',
         database: 'green_run',
-        entities: [__dirname + '/**/*.entity.{.ts,.js}'],
+        entities: [User],
         synchronize: true,
       });
 

@@ -31,6 +31,9 @@ export class User {
   username: string;
 
   @Column({ length: 255 })
+  password: string;
+
+  @Column({ length: 255 })
   address: string;
 
   @Column({ length: 10 })
@@ -45,13 +48,13 @@ export class User {
   @Column({ length: 50 })
   city: string;
 
-  @Column({ length: 50 })
-  category: string;
-
   @Column({ length: 20 })
   document_id: string;
 
-  @Column({ length: 50 })
+  @Column({ default: 0 })
+  balance: number;
+
+  @Column({ default: 'active' })
   user_state: string;
 
   @CreateDateColumn()
@@ -60,7 +63,7 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column()
+  @Column({ default: false })
   deleted: boolean;
 
   @DeleteDateColumn()
