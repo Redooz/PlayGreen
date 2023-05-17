@@ -1,10 +1,17 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { RegisterAuthDto } from './dto/RegisterUserDto';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/user.entity';
 import { LoginAuthDto } from './dto/LoginAuthDto';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { PayloadToken } from './models/token.model';
 
 @Injectable()
 export class AuthService {
@@ -41,14 +48,20 @@ export class AuthService {
       throw new HttpException('INVALID_CREDENTIALS', HttpStatus.FORBIDDEN);
     }
 
-    const payload = { id: findUser.id, role: findUser.role };
-    const token = this.jwtService.sign(payload);
-
-    const data = {
+    const payload: PayloadToken = { role: findUser.role, sub: findUser.id };
+    return {
+      access_token: this.jwtService.sign(payload),
       user: findUser,
-      token,
     };
+  }
 
-    return data;
+  decodeToken(token: string): any {
+    try {
+      const decoded = this.jwtService.verify(token);
+      return decoded;
+    } catch (error) {
+      // Handle token verification error
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }

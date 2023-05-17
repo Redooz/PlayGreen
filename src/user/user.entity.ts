@@ -1,3 +1,4 @@
+import { Role } from 'src/auth/dto/constants/enums';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -12,7 +13,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column()
   role: string;
 
   @Column({ length: 50 })
