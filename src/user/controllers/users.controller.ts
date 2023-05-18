@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { UserService as UsersService } from '../services/users.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+
 import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/dto/constants/enums';
@@ -10,15 +19,17 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
+  ApiParam,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
+import { UserService } from '../services/users.service';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 @ApiTags('Users')
 export class UsersController {
-  constructor(private readonly service: UsersService) {}
+  constructor(private readonly service: UserService) {}
 
   @Roles(Role.ADMIN)
   @Get()
@@ -39,5 +50,32 @@ export class UsersController {
   @ApiResponse({ status: 201, description: 'User created', type: User })
   createUser(@Body() newUser: RegisterAuthDto) {
     return this.service.create(newUser);
+  }
+
+  @Get(':id')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Get a user by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Success', type: User })
+  getUserById(@Param('id') id: number) {
+    return this.service.findById(id);
+  }
+
+  @Patch(':id')
+  @Roles(Role.USER, Role.ADMIN)
+  @ApiOperation({ summary: 'Update a user by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Success', type: User })
+  updateUserById(@Param('id') id: number, @Body() updatedUser: Partial<User>) {
+    return this.service.update(id, updatedUser);
+  }
+
+  @Delete(':id')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Delete a user by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Success' })
+  deleteUserById(@Param('id') id: number) {
+    return this.service.delete(id);
   }
 }
