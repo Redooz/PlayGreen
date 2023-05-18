@@ -1,7 +1,7 @@
-import { User } from 'src/user/user.entity';
 import { DataSource } from 'typeorm';
 import { ConfigType } from '@nestjs/config';
 import config from 'src/config';
+import { User } from 'src/user/entities/user.entity';
 
 export const databaseProviders = [
   {
