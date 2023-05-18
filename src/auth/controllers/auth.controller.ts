@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthService } from './services/auth.service';
-import { RegisterAuthDto } from './dto/RegisterUserDto';
-import { LoginAuthDto } from './dto/LoginAuthDto';
+import { AuthService } from '../services/auth.service';
+import { RegisterAuthDto } from '../dto/RegisterUserDto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { User } from 'src/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +17,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   loginUser(@Req() req: Request) {
-    return req.user;
+    return this.service.generateJWT(req.user as User);
   }
 }

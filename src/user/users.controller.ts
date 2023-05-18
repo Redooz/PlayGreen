@@ -5,14 +5,15 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/dto/constants/enums';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuth.guard';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly service: UsersService) {}
 
   @Get()
   //@Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'))
   @Public()
   getUsers() {
     return this.service.findAll();
