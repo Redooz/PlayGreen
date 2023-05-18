@@ -1,4 +1,3 @@
-import { Role } from 'src/auth/dto/constants/enums';
 import {
   Entity,
   PrimaryGeneratedColumn,

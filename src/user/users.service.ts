@@ -18,4 +18,14 @@ export class UserService {
     const newUser = this.userRepository.create(user);
     return this.userRepository.save(newUser);
   }
+
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    return user;
+  }
 }
