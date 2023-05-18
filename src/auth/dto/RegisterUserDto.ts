@@ -1,4 +1,10 @@
-import { IsDate, IsEmail, IsEnum, Length, MinLength } from 'class-validator';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  Length,
+  MinLength,
+} from 'class-validator';
 import { Gender, Role } from './constants/enums';
 
 export class RegisterAuthDto {
@@ -29,7 +35,7 @@ export class RegisterAuthDto {
   @IsEnum(Gender)
   gender: Gender;
 
-  @IsDate()
+  @IsDateString()
   birth_date: Date;
 
   @Length(2)
