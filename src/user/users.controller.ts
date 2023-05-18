@@ -3,17 +3,17 @@ import { UserService as UsersService } from './users.service';
 import { RegisterAuthDto } from '../auth/dto/RegisterUserDto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/dto/constants/enums';
-import { Public } from 'src/auth/decorators/public.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly service: UsersService) {}
 
+  @Roles(Role.ADMIN)
   @Get()
   //@Roles(Role.ADMIN)
-  @Public()
   getUsers() {
     return this.service.findAll();
   }
