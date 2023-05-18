@@ -5,7 +5,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '../dto/constants/enums';
+import { Role } from '../../user/constants/enums';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { PayloadToken } from '../models/token.model';
 
@@ -27,7 +27,7 @@ export class RolesGuard implements CanActivate {
 
     const isAuth = requiredRoles.includes(user.role as Role);
     if (!isAuth) {
-      throw new ForbiddenException('your role is wrong');
+      throw new ForbiddenException('Your role is not authorized');
     }
     return isAuth;
   }

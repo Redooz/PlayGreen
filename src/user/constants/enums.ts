@@ -28,3 +28,9 @@ export enum Role {
    */
   USER = 'user',
 }
+
+export enum State {
+  ACTIVE = 'active',
+
+  BLOCKED = 'blocked',
+}

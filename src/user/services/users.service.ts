@@ -1,7 +1,14 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
+import { UserStateDto } from '../dtos/block-user.dto';
+import { Role } from '../constants/enums';
 
 @Injectable()
 export class UserService {
@@ -59,5 +66,20 @@ export class UserService {
 
     // Save the updated user
     await this.userRepository.save(user);
+  }
+
+  async updateState(id: number, blockUserDto: UserStateDto): Promise<User> {
+    const user = await this.findById(id);
+
+    // Check if the user is an admin
+    if (user.role === Role.ADMIN) {
+      throw new BadRequestException('Blocking admins is not allowed');
+    }
+
+    // Update the user's blocked status
+    user.user_state = blockUserDto.state;
+
+    // Save the updated user
+    return this.userRepository.save(user);
   }
 }

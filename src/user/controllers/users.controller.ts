@@ -11,7 +11,6 @@ import {
 
 import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/dto/constants/enums';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import {
@@ -23,6 +22,8 @@ import {
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
 import { UserService } from '../services/users.service';
+import { UserStateDto } from '../dtos/block-user.dto';
+import { Role } from '../constants/enums';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -77,5 +78,13 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Success' })
   deleteUserById(@Param('id') id: number) {
     return this.service.delete(id);
+  }
+
+  @Roles(Role.ADMIN)
+  @Patch(':id/state')
+  @ApiOperation({ summary: 'Change state a specific user' })
+  @ApiResponse({ status: 200, description: 'User updated', type: User })
+  updateState(@Param('id') id: number, @Body() userStateDto: UserStateDto) {
+    return this.service.updateState(id, userStateDto);
   }
 }
