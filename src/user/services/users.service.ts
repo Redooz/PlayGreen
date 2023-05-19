@@ -108,7 +108,7 @@ export class UserService {
     const user = await this.findById(id);
 
     const data: BalanceResponse = {
-      id: user.id,
+      user_id: user.id,
       balance: user.balance,
     };
 
