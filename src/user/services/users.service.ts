@@ -92,4 +92,14 @@ export class UserService {
 
     return await this.userRepository.save(user);
   }
+
+  async withdrawMoney(id: number, amount: number): Promise<User> {
+    const user = await this.findById(id);
+
+    const updatedBalance = user.balance - amount;
+
+    user.balance = updatedBalance;
+
+    return await this.userRepository.save(user);
+  }
 }

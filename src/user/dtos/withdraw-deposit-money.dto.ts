@@ -1,6 +1,6 @@
 import { IsNumber, IsPositive } from 'class-validator';
 
-export class DepositMoneyDto {
+export class WithdrawDepositMoneyDto {
   @IsNumber({
     allowNaN: false,
   })

@@ -20,7 +20,7 @@ import { PayloadToken } from 'src/auth/models/token.model';
 import { UserService } from '../services/users.service';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { User } from '../entities/user.entity';
-import { DepositMoneyDto } from '../dtos/deposit-money.dto';
+import { WithdrawDepositMoneyDto } from '../dtos/withdraw-deposit-money.dto';
 
 @Controller('profile')
 @UseGuards(JwtAuthGuard)
@@ -51,9 +51,19 @@ export class ProfileController {
   @ApiOperation({ summary: 'Deposit money into user account' })
   @ApiResponse({ status: 200, description: 'Success', type: User })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  depositMoney(@Req() req: Request, @Body() deposit: DepositMoneyDto) {
+  depositMoney(@Req() req: Request, @Body() deposit: WithdrawDepositMoneyDto) {
     const user = req.user as PayloadToken;
 
     return this.userService.depositMoney(user.sub, deposit.amount);
+  }
+
+  @Post('withdraw')
+  @ApiOperation({ summary: 'Withdraw money into user account' })
+  @ApiResponse({ status: 200, description: 'Success', type: User })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  withdrawMoney(@Req() req: Request, @Body() deposit: WithdrawDepositMoneyDto) {
+    const user = req.user as PayloadToken;
+
+    return this.userService.withdrawMoney(user.sub, deposit.amount);
   }
 }
