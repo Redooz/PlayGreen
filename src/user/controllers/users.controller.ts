@@ -8,7 +8,6 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-
 import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -25,6 +24,7 @@ import { User } from '../entities/user.entity';
 import { UserService } from '../services/users.service';
 import { UserStateDto } from '../dtos/block-user.dto';
 import { Role } from '../constants/enums';
+import { BalanceResponse } from '../responses/balance.response';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -99,5 +99,17 @@ export class UsersController {
   })
   updateState(@Param('id') id: number, @Body() userStateDto: UserStateDto) {
     return this.service.updateState(id, userStateDto);
+  }
+
+  @Get(':id/balance')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Get the balance of a specific user' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Success', type: BalanceResponse })
+  @ApiForbiddenResponse({
+    description: 'Forbidden, Only admins are authorized',
+  })
+  getBalanceById(@Param('id') id: number) {
+    return this.service.getBalanceById(id);
   }
 }
