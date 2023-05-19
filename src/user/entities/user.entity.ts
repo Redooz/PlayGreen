@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserTransaction } from 'src/transaction/entities/transaction.entity';
 
 @Entity()
 export class User {
@@ -89,4 +91,7 @@ export class User {
   @DeleteDateColumn()
   @ApiProperty()
   deleted_at: Date;
+
+  @OneToMany(() => UserTransaction, (transaction) => transaction.user)
+  transactions: UserTransaction[];
 }

@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import config from './config';
 import { enviroments } from './enviroments';
+import { TransactionModule } from './transaction/transaction.module';
+import { UserBetsModule } from './user-bets/user-bets.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { enviroments } from './enviroments';
     DatabaseModule,
     UserModule,
     AuthModule,
+    TransactionModule,
+    UserBetsModule,
   ],
   controllers: [],
   providers: [],
