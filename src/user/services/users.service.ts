@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
 import { UserStateDto } from '../dtos/block-user.dto';
 import { Role } from '../constants/enums';
+import { BalanceResponse } from '../responses/balance.response';
 
 @Injectable()
 export class UserService {
@@ -101,5 +102,16 @@ export class UserService {
     user.balance = updatedBalance;
 
     return await this.userRepository.save(user);
+  }
+
+  async getBalanceById(id: number) {
+    const user = await this.findById(id);
+
+    const data: BalanceResponse = {
+      id: user.id,
+      balance: user.balance,
+    };
+
+    return data;
   }
 }
