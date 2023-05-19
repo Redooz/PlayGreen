@@ -19,6 +19,7 @@ import {
   ApiResponse,
   ApiBearerAuth,
   ApiParam,
+  ApiForbiddenResponse,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
 import { UserService } from '../services/users.service';
@@ -58,13 +59,19 @@ export class UsersController {
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Success', type: User })
+  @ApiForbiddenResponse({
+    description: 'Forbidden, Only admins are authorized',
+  })
   getUserById(@Param('id') id: number) {
     return this.service.findById(id);
   }
 
   @Patch(':id')
-  @Roles(Role.USER, Role.ADMIN)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Update a user by ID' })
+  @ApiForbiddenResponse({
+    description: 'Forbidden, Only admins are authorized',
+  })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Success', type: User })
   updateUserById(@Param('id') id: number, @Body() updatedUser: Partial<User>) {
@@ -76,14 +83,20 @@ export class UsersController {
   @ApiOperation({ summary: 'Delete a user by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Success' })
+  @ApiForbiddenResponse({
+    description: 'Forbidden, Only admins are authorized',
+  })
   deleteUserById(@Param('id') id: number) {
     return this.service.delete(id);
   }
 
-  @Roles(Role.ADMIN)
   @Patch(':id/state')
-  @ApiOperation({ summary: 'Change state a specific user' })
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Change state of a specific user' })
   @ApiResponse({ status: 200, description: 'User updated', type: User })
+  @ApiForbiddenResponse({
+    description: 'Forbidden, Only admins are authorized',
+  })
   updateState(@Param('id') id: number, @Body() userStateDto: UserStateDto) {
     return this.service.updateState(id, userStateDto);
   }

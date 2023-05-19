@@ -18,7 +18,7 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async findById(id: number) {
@@ -47,7 +47,7 @@ export class UserService {
 
   async create(user: RegisterAuthDto) {
     const newUser = this.userRepository.create(user);
-    return this.userRepository.save(newUser);
+    return await this.userRepository.save(newUser);
   }
 
   async update(id: number, updatedUser: Partial<User>) {
@@ -64,8 +64,8 @@ export class UserService {
     // Set the "deleted" flag to true
     user.deleted = true;
 
-    // Save the updated user
-    await this.userRepository.save(user);
+    // Soft Delete the user
+    await this.userRepository.softDelete(user);
   }
 
   async updateState(id: number, blockUserDto: UserStateDto): Promise<User> {
@@ -80,6 +80,16 @@ export class UserService {
     user.user_state = blockUserDto.state;
 
     // Save the updated user
-    return this.userRepository.save(user);
+    return await this.userRepository.save(user);
+  }
+
+  async depositMoney(id: number, amount: number): Promise<User> {
+    const user = await this.findById(id);
+
+    const updatedBalance = user.balance + amount;
+
+    user.balance = updatedBalance;
+
+    return await this.userRepository.save(user);
   }
 }
