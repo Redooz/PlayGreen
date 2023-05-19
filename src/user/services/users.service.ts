@@ -3,6 +3,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -96,6 +97,10 @@ export class UserService {
 
   async withdrawMoney(id: number, amount: number): Promise<User> {
     const user = await this.findById(id);
+
+    if (user.balance < amount) {
+      throw new UnprocessableEntityException('Insufficient balance');
+    }
 
     const updatedBalance = user.balance - amount;
 

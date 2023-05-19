@@ -13,6 +13,7 @@ import {
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -61,6 +62,7 @@ export class ProfileController {
   @ApiOperation({ summary: 'Withdraw money from user account' })
   @ApiResponse({ status: 200, description: 'Success', type: User })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiUnprocessableEntityResponse({ description: 'Insufficient balance' })
   withdrawMoney(@Req() req: Request, @Body() deposit: WithdrawDepositMoneyDto) {
     const user = req.user as PayloadToken;
     return this.userService.withdrawMoney(user.sub, deposit.amount);
