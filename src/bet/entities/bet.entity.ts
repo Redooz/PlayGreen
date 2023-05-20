@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EventTeams } from 'src/event-teams/entities/event-teams.entity';
+import { Events } from 'src/event-teams/entities/event-teams.entity';
 import { UserBet } from 'src/user-bets/entities/user-bet.entity';
 import {
   Column,
@@ -10,17 +10,21 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { BetStatus } from '../constants/enums';
 
 @Entity()
-export class SportEvent {
+export class Bet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => UserBet, (bet) => bet.sportEvent)
+  @OneToMany(() => UserBet, (bet) => bet.betOption)
   userBets: UserBet[];
 
-  @OneToMany(() => EventTeams, (eventTeam) => eventTeam.sportEvent)
-  eventsTeam: EventTeams[];
+  @OneToMany(() => Events, (event) => event.bet)
+  events: Events[];
+
+  @Column({ default: BetStatus.ACTIVE })
+  bet_status: string;
 
   @CreateDateColumn()
   @ApiProperty()

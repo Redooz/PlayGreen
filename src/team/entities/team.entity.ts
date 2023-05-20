@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EventTeams } from 'src/event-teams/entities/event-teams.entity';
+import { Events } from 'src/event-teams/entities/event-teams.entity';
 import {
   Column,
   CreateDateColumn,
@@ -18,8 +18,8 @@ export class Team {
   @Column()
   teamName: string;
 
-  @OneToMany(() => EventTeams, (eventTeam) => eventTeam.sportEvent)
-  eventsTeams: EventTeams[];
+  @OneToMany(() => Events, (eventTeam) => eventTeam.bet)
+  eventsTeams: Events[];
 
   @CreateDateColumn()
   @ApiProperty()

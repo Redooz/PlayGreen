@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SportEvent } from 'src/sport-event/entities/sport-event.entity';
+import { Bet } from 'src/bet/entities/bet.entity';
 import { Team } from 'src/team/entities/team.entity';
 import {
   Column,
@@ -12,12 +12,12 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class EventTeams {
+export class Events {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SportEvent, (sportEvent) => sportEvent.eventsTeam)
-  sportEvent: SportEvent;
+  @ManyToOne(() => Bet, (bet) => bet.events)
+  bet: Bet;
 
   @ManyToOne(() => Team, (team) => team.eventsTeams)
   team: Team;

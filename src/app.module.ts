@@ -7,7 +7,7 @@ import config from './config';
 import { enviroments } from './enviroments';
 import { TransactionModule } from './transaction/transaction.module';
 import { UserBetsModule } from './user-bets/user-bets.module';
-import { EventModule } from './sport-event/event.module';
+import { EventModule } from './bet/event.module';
 import { TeamModule } from './team/team.module';
 import { EventTeamsModule } from './event-teams/event-teams.module';
 

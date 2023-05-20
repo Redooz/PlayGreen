@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SportEvent } from 'src/sport-event/entities/sport-event.entity';
+import { Bet } from 'src/bet/entities/bet.entity';
 import { UserTransaction } from 'src/transaction/entities/transaction.entity';
 import {
   Column,
@@ -17,15 +17,12 @@ export class UserBet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SportEvent)
+  @ManyToOne(() => Bet)
   @JoinColumn()
-  sportEvent: SportEvent;
+  betOption: Bet;
 
   @Column()
   amount: number;
-
-  @Column()
-  bet_option: number;
 
   @Column()
   state: string;
