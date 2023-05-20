@@ -86,7 +86,7 @@ export class ProfileController {
   }
 
   @Get('transactions')
-  @ApiOperation({ summary: 'Get user transactions by type' })
+  @ApiOperation({ summary: 'Get all user transactions' })
   @ApiResponse({
     status: 200,
     description: 'Success',

@@ -7,10 +7,11 @@ import { ProfileController } from './controllers/profile.controller';
 import { TransactionService } from 'src/transaction/services/transaction.service';
 import { TransactionModule } from 'src/transaction/transaction.module';
 import { transactionProviders } from 'src/transaction/entities/transaction.providers';
+import { BetsController } from './controllers/bets.controller';
 
 @Module({
   imports: [DatabaseModule, TransactionModule],
-  controllers: [UsersController, ProfileController],
+  controllers: [UsersController, ProfileController, BetsController],
   providers: [
     ...userProviders,
     UserService,

@@ -25,6 +25,8 @@ import { UserService } from '../services/users.service';
 import { UserStateDto } from '../dtos/block-user.dto';
 import { Role } from '../constants/enums';
 import { BalanceResponse } from '../responses/balance.response';
+import { UserTransaction } from 'src/transaction/entities/transaction.entity';
+import { TransactionCategory } from 'src/transaction/constants/enums';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -111,5 +113,34 @@ export class UsersController {
   })
   getBalanceById(@Param('id') id: number) {
     return this.service.getBalanceById(id);
+  }
+
+  @Get(':id/transactions')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Get all user transactions by users id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Success',
+    type: UserTransaction,
+    isArray: true,
+  })
+  getTransactions(@Param('id') id: number): Promise<UserTransaction[]> {
+    return this.service.getAllTransactions(id);
+  }
+
+  @Get(':id/transactions/:type')
+  @ApiOperation({ summary: 'Get user transactions by type and its id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Success',
+    type: UserTransaction,
+    isArray: true,
+  })
+  //
+  getTransactionsByType(
+    @Param('id') id: number,
+    @Param('type') type: TransactionCategory,
+  ): Promise<UserTransaction[]> {
+    return this.service.getTransactionsById(id, type);
   }
 }
