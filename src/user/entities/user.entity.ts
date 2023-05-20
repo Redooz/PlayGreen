@@ -68,10 +68,6 @@ export class User {
   @ApiProperty()
   document_id: string;
 
-  @Column({ default: 0 })
-  @ApiProperty()
-  balance: number;
-
   @Column({ default: 'active' })
   @ApiProperty()
   user_state: string;

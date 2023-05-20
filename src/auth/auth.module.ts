@@ -10,6 +10,8 @@ import { ConfigType } from '@nestjs/config';
 import config from 'src/config';
 import { userProviders } from 'src/user/entities/user.providers';
 import { UserService } from 'src/user/services/users.service';
+import { transactionProviders } from 'src/transaction/entities/transaction.providers';
+import { TransactionService } from 'src/transaction/services/transaction.service';
 
 @Module({
   imports: [
@@ -30,10 +32,12 @@ import { UserService } from 'src/user/services/users.service';
   controllers: [AuthController],
   providers: [
     ...userProviders,
+    ...transactionProviders,
     AuthService,
     JwtStrategy,
     LocalStrategy,
     UserService,
+    TransactionService,
   ],
 })
 export class AuthModule {}
