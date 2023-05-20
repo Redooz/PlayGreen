@@ -7,7 +7,7 @@ export default registerAs('config', () => {
       host: process.env.MYSQL_HOST,
       port: parseInt(process.env.MYSQL_PORT, 10),
       user: process.env.MYSQL_USER,
-      password: '',
+      password: process.env.MYSQL_PASSWORD,
       name: process.env.MYSQL_DB,
     },
   };

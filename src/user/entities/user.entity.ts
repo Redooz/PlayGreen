@@ -76,6 +76,9 @@ export class User {
   @ApiProperty()
   user_state: string;
 
+  @OneToMany(() => UserTransaction, (transaction) => transaction.user)
+  transactions: UserTransaction[];
+
   @CreateDateColumn()
   @ApiProperty()
   created_at: Date;
@@ -91,7 +94,4 @@ export class User {
   @DeleteDateColumn()
   @ApiProperty()
   deleted_at: Date;
-
-  @OneToMany(() => UserTransaction, (transaction) => transaction.user)
-  transactions: UserTransaction[];
 }

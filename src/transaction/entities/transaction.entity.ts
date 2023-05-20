@@ -7,8 +7,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserBet } from 'src/user-bets/entities/user-bet.entity';
 
 @Entity()
 export class UserTransaction {
@@ -38,12 +40,8 @@ export class UserTransaction {
   })
   category: string;
 
-  @Column({ default: 'pending' })
-  @ApiProperty({
-    example: 'pending',
-    description: 'The status of the transaction',
-  })
-  status: string;
+  @OneToMany(() => UserBet, (userBet) => userBet.transaction)
+  user_bets: UserBet[];
 
   @CreateDateColumn({ type: 'timestamp' })
   @ApiProperty({
@@ -72,11 +70,4 @@ export class UserTransaction {
     description: 'The timestamp when the transaction was soft deleted',
   })
   deleted_at: Date;
-
-  @Column({ nullable: true })
-  @ApiProperty({
-    example: 1,
-    description: 'The ID of the associated user bet (if applicable)',
-  })
-  user_bet_id: number;
 }

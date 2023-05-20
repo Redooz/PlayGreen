@@ -1,40 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { SportEvent } from 'src/sport-event/entities/sport-event.entity';
-import { UserTransaction } from 'src/transaction/entities/transaction.entity';
+import { Team } from 'src/team/entities/team.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class UserBet {
+export class EventTeams {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SportEvent)
-  @JoinColumn()
+  @ManyToOne(() => SportEvent, (sportEvent) => sportEvent.eventsTeam)
   sportEvent: SportEvent;
 
-  @Column()
-  amount: number;
+  @ManyToOne(() => Team, (team) => team.eventsTeams)
+  team: Team;
 
   @Column()
-  bet_option: number;
+  odd: number;
 
   @Column()
-  state: string;
-
-  @ManyToOne(
-    () => UserTransaction,
-    (userTransaction) => userTransaction.user_bets,
-  )
-  transaction: UserTransaction;
+  result: string;
 
   @CreateDateColumn()
   @ApiProperty()
