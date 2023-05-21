@@ -12,7 +12,7 @@ import { EventTeamsModule } from './event-teams/event-teams.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      envFilePath: enviroments[process.env.NODE_ENV] || '.stag.env',
       load: [config],
       isGlobal: true,
     }),
