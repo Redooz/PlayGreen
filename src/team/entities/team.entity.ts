@@ -18,7 +18,7 @@ export class Team {
   @Column()
   teamName: string;
 
-  @OneToMany(() => Events, (eventTeam) => eventTeam.bet)
+  @OneToMany(() => Events, (eventTeam) => eventTeam.bet, { nullable: true })
   eventsTeams: Events[];
 
   @CreateDateColumn()

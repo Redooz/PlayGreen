@@ -10,7 +10,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserBet } from 'src/user-bets/entities/user-bet.entity';
+import { UserBet } from './user-bet.entity';
 
 @Entity()
 export class UserTransaction {

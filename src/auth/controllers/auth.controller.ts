@@ -1,5 +1,13 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiResponse,
+  ApiTags,
+  ApiCreatedResponse,
+  ApiBadRequestResponse,
+  ApiUnauthorizedResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { AuthService } from '../services/auth.service';
 import { RegisterAuthDto } from '../dto/register-user.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -12,17 +20,19 @@ import { User } from 'src/user/entities/user.entity';
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
-  @ApiResponse({ status: 201, description: 'User registered successfully' })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiCreatedResponse({ description: 'User registered successfully' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
   @ApiBody({ type: RegisterAuthDto })
   @Post('register')
   registerUser(@Body() userObject: RegisterAuthDto) {
     return this.service.register(userObject);
   }
 
+  @ApiOperation({ summary: 'Authenticate and log in a user' })
   @UseGuards(AuthGuard('local'))
   @ApiResponse({ status: 200, description: 'User logged in successfully' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiBody({ type: LoginAuthDto })
   @Post('login')
   loginUser(@Req() req: Request) {

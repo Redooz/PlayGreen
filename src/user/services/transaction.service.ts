@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserTransaction } from '../entities/transaction.entity';
 import { User } from 'src/user/entities/user.entity';
-import { TransactionCategory } from '../constants/enums';
+import { TransactionCategory } from '../constants/transactions.enums';
 
 @Injectable()
 export class TransactionService {
@@ -20,8 +20,20 @@ export class TransactionService {
       user,
       TransactionCategory.WITHDRAW,
     );
+    const totalWinningsValue = await this.getTransactionValueByUser(
+      user,
+      TransactionCategory.WINNING,
+    );
+    const totalBetsValue = await this.getTransactionValueByUser(
+      user,
+      TransactionCategory.BET,
+    );
 
-    const balance = totalDepositsValue - totalWithdrawsValue;
+    const balance =
+      totalDepositsValue -
+      totalWithdrawsValue +
+      totalWinningsValue -
+      totalBetsValue;
     return balance;
   }
 

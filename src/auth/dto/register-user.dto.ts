@@ -6,7 +6,7 @@ import {
   Length,
   MinLength,
 } from 'class-validator';
-import { Gender, Role } from '../../user/constants/enums';
+import { Gender, Role } from '../../user/constants/user.enums';
 
 export class RegisterAuthDto {
   @ApiProperty({

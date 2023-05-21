@@ -6,7 +6,7 @@ import {
   Length,
   MinLength,
 } from 'class-validator';
-import { Gender } from '../../user/constants/enums';
+import { Gender } from '../constants/user.enums';
 
 export class UpdateUserDto {
   @ApiProperty({ description: 'First name of the user', example: 'John' })

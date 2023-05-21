@@ -2,11 +2,11 @@ import { DataSource } from 'typeorm';
 import { ConfigType } from '@nestjs/config';
 import config from 'src/config';
 import { User } from 'src/user/entities/user.entity';
-import { UserTransaction } from 'src/transaction/entities/transaction.entity';
-import { UserBet } from 'src/user-bets/entities/user-bet.entity';
 import { Team } from 'src/team/entities/team.entity';
 import { Events } from 'src/event-teams/entities/event-teams.entity';
 import { Bet } from 'src/bet/entities/bet.entity';
+import { UserTransaction } from 'src/user/entities/transaction.entity';
+import { UserBet } from 'src/user/entities/user-bet.entity';
 
 export const databaseProviders = [
   {

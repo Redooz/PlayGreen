@@ -5,9 +5,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import config from './config';
 import { enviroments } from './enviroments';
-import { TransactionModule } from './transaction/transaction.module';
-import { UserBetsModule } from './user-bets/user-bets.module';
-import { EventModule } from './bet/event.module';
+import { BetModule } from './bet/bet.module';
 import { TeamModule } from './team/team.module';
 import { EventTeamsModule } from './event-teams/event-teams.module';
 
@@ -21,13 +19,10 @@ import { EventTeamsModule } from './event-teams/event-teams.module';
     DatabaseModule,
     UserModule,
     AuthModule,
-    TransactionModule,
-    UserBetsModule,
-    EventModule,
+    BetModule,
     TeamModule,
     EventTeamsModule,
   ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {}

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Events } from 'src/event-teams/entities/event-teams.entity';
-import { UserBet } from 'src/user-bets/entities/user-bet.entity';
 import {
   Column,
   CreateDateColumn,
@@ -10,7 +9,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BetStatus } from '../constants/enums';
+import { BetStatus } from '../constants/bet.enums';
+import { UserBet } from 'src/user/entities/user-bet.entity';
 
 @Entity()
 export class Bet {

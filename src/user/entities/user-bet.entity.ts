@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Bet } from 'src/bet/entities/bet.entity';
-import { UserTransaction } from 'src/transaction/entities/transaction.entity';
+import { UserTransaction } from 'src/user/entities/transaction.entity';
 import {
   Column,
   CreateDateColumn,
@@ -21,10 +21,7 @@ export class UserBet {
   @JoinColumn()
   betOption: Bet;
 
-  @Column()
-  amount: number;
-
-  @Column()
+  @Column({ nullable: true })
   state: string;
 
   @ManyToOne(

@@ -25,7 +25,7 @@ export class Events {
   @Column()
   odd: number;
 
-  @Column()
+  @Column({ nullable: true })
   result: string;
 
   @CreateDateColumn()

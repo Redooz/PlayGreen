@@ -23,10 +23,7 @@ import {
 import { User } from '../entities/user.entity';
 import { UserService } from '../services/users.service';
 import { UserStateDto } from '../dtos/block-user.dto';
-import { Role } from '../constants/enums';
-import { BalanceResponse } from '../responses/balance.response';
-import { UserTransaction } from 'src/transaction/entities/transaction.entity';
-import { TransactionCategory } from 'src/transaction/constants/enums';
+import { Role } from '../constants/user.enums';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -101,46 +98,5 @@ export class UsersController {
   })
   updateState(@Param('id') id: number, @Body() userStateDto: UserStateDto) {
     return this.service.updateState(id, userStateDto);
-  }
-
-  @Get(':id/balance')
-  @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Get the balance of a specific user' })
-  @ApiParam({ name: 'id', type: Number })
-  @ApiResponse({ status: 200, description: 'Success', type: BalanceResponse })
-  @ApiForbiddenResponse({
-    description: 'Forbidden, Only admins are authorized',
-  })
-  getBalanceById(@Param('id') id: number) {
-    return this.service.getBalanceById(id);
-  }
-
-  @Get(':id/transactions')
-  @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Get all user transactions by users id' })
-  @ApiResponse({
-    status: 200,
-    description: 'Success',
-    type: UserTransaction,
-    isArray: true,
-  })
-  getTransactions(@Param('id') id: number): Promise<UserTransaction[]> {
-    return this.service.getAllTransactions(id);
-  }
-
-  @Get(':id/transactions/:type')
-  @ApiOperation({ summary: 'Get user transactions by type and its id' })
-  @ApiResponse({
-    status: 200,
-    description: 'Success',
-    type: UserTransaction,
-    isArray: true,
-  })
-  //
-  getTransactionsByType(
-    @Param('id') id: number,
-    @Param('type') type: TransactionCategory,
-  ): Promise<UserTransaction[]> {
-    return this.service.getTransactionsById(id, type);
   }
 }

@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserTransaction } from 'src/transaction/entities/transaction.entity';
+import { UserTransaction } from './transaction.entity';
 
 @Entity()
 export class User {

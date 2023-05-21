@@ -10,8 +10,12 @@ import { ConfigType } from '@nestjs/config';
 import config from 'src/config';
 import { userProviders } from 'src/user/entities/user.providers';
 import { UserService } from 'src/user/services/users.service';
-import { transactionProviders } from 'src/transaction/entities/transaction.providers';
-import { TransactionService } from 'src/transaction/services/transaction.service';
+import { transactionProviders } from 'src/user/entities/transaction.providers';
+import { TransactionService } from 'src/user/services/transaction.service';
+import { BetService } from 'src/bet/services/bet.service';
+import { betProviders } from 'src/bet/entities/sport-bet.providers';
+import { userBetProviders } from 'src/user/entities/user-bet.providers';
+import { UserBetService } from 'src/user/services/userBet.service';
 
 @Module({
   imports: [
@@ -33,11 +37,15 @@ import { TransactionService } from 'src/transaction/services/transaction.service
   providers: [
     ...userProviders,
     ...transactionProviders,
+    ...betProviders,
+    ...userBetProviders,
     AuthService,
     JwtStrategy,
     LocalStrategy,
     UserService,
     TransactionService,
+    BetService,
+    UserBetService,
   ],
 })
 export class AuthModule {}
