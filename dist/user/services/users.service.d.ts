@@ -1,0 +1,30 @@
+import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
+import { RegisterAuthDto } from '../../auth/dto/register-user.dto';
+import { UserStateDto } from '../dtos/block-user.dto';
+import { BalanceResponse } from '../responses/balance.response';
+import { TransactionService } from './transaction.service';
+import { TransactionCategory } from '../constants/transactions.enums';
+import { UserBet } from '../entities/user-bet.entity';
+import { BetService } from 'src/bet/services/bet.service';
+import { UserBetService } from './userBet.service';
+export declare class UserService {
+    private userRepository;
+    private transactionService;
+    private betService;
+    private userBetService;
+    constructor(userRepository: Repository<User>, transactionService: TransactionService, betService: BetService, userBetService: UserBetService);
+    findAll(): Promise<User[]>;
+    findById(id: number): Promise<User>;
+    findByEmail(email: string): Promise<User>;
+    create(user: RegisterAuthDto): Promise<User>;
+    update(id: number, updatedUser: Partial<User>): Promise<User>;
+    delete(id: number): Promise<void>;
+    updateState(id: number, blockUserDto: UserStateDto): Promise<User>;
+    getAllTransactions(id: number): Promise<import("../entities/transaction.entity").UserTransaction[]>;
+    getTransactionsById(id: number, category: TransactionCategory): Promise<import("../entities/transaction.entity").UserTransaction[]>;
+    depositMoney(id: number, amount: number): Promise<import("../entities/transaction.entity").UserTransaction>;
+    createUserBet(id: number, amount: number, betOption: number): Promise<UserBet>;
+    withdrawMoney(id: number, amount: number): Promise<import("../entities/transaction.entity").UserTransaction>;
+    getBalanceById(id: number): Promise<BalanceResponse>;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"transaction.providers.js","sourceRoot":"","sources":["../../../src/user/entities/transaction.providers.ts"],"names":[],"mappings":";;;AACA,6DAAuD;AAE1C,QAAA,oBAAoB,GAAG;IAClC;QACE,OAAO,EAAE,wBAAwB;QACjC,UAAU,EAAE,CAAC,UAAsB,EAAE,EAAE,CACrC,UAAU,CAAC,aAAa,CAAC,oCAAe,CAAC;QAC3C,MAAM,EAAE,CAAC,aAAa,CAAC;KACxB;CACF,CAAC"}
