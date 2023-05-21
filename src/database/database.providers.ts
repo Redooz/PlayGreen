@@ -22,7 +22,7 @@ export const databaseProviders = [
         password: password,
         database: name,
         entities: [User, UserTransaction, UserBet, Bet, Team, Events],
-        synchronize: true,
+        synchronize: false,
       });
 
       return dataSource.initialize();
